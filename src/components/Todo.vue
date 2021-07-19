@@ -8,7 +8,7 @@
                 <div class="todo__body">
                     <ul class="todo__list">
                         <Todo-list 
-                            v-for="(todo, index) in todoList" 
+                            v-for="(todo, index) in todos" 
                             :todo="todo" 
                             :key="index" 
                             :index="index"
@@ -32,25 +32,54 @@ export default {
    data() {
        return {
            newTodo: '',
-           todoList: [
-               {content: 'ABC', done: true}
-           ]
+           todos: [],
        }
    },
    props: ['message', 'changeAge'],
    components: {TodoList},
    methods: {
+       updateLocalData: function() {
+           localStorage.setItem("todos", JSON.stringify(this.todos));
+       },
+
        handleAddTask: function() {
-           this.todoList.push({content: this.newTodo, done: false});
+           this.todos.push({content: this.newTodo, done: false});
            this.newTodo = '';
+           
        },
+
        handleRemoveTask: function(index) {
-           this.todoList.splice(index, 1);
+           this.todos.splice(index, 1);
        },
+
        handleSetDone: function(index) {
-           this.todoList[index].done = !this.todoList[index].done;
+           this.todos[index].done = !this.todos[index].done;
        }
-   }
+
+    },
+    
+    watch: {
+        todos: {
+            deep: true,
+            handler() {
+                this.updateLocalData();
+            }
+        }
+    },
+    created() {
+        let localData = localStorage.getItem('todos');
+        if(localData === null)
+        {
+            let todos = [
+                {content: 'Todo project use localStorage', done: true}
+            ];
+            localStorage.setItem("todos", JSON.stringify(todos));
+        }
+        else
+        {
+            this.todos = JSON.parse(localStorage.getItem("todos"));
+        }
+    }
 }
 </script>
 

@@ -19,18 +19,6 @@ export default {
     components: {
         Todo
     },
-    mounted() {
-        console.log('Mounted');
-    },
-    beforeUpdate() {
-        console.log('html will change');
-    },
-    updated() {
-        console.log('html changed');
-    },
-    beforeDestroy() {
-        console.log('');
-    },
    
 }
 </script>
