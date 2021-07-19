@@ -1,4 +1,4 @@
-# learn-vue
+# Todo project
 
 ## Project setup
 ```
